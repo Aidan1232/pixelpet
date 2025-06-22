@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pixel Pet</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="version-label">
+            <span class="shimmer-text">Pixel Pet v1.0</span>
+        </div>
+        <div class="pet-container">
+            <img id="pet-sprite" src="assets/sprites/egg.png" alt="Your Pet" />
+            <div class="age-display">Age: <span id="age">0</span> years</div>
+            <div class="stats">
+                <div>Hunger: <span id="hunger">100</span></div>
+                <div>Energy: <span id="energy">100</span></div>
+                <div>Mood: <span id="mood">Happy</span></div>
+            </div>
+            <div class="buttons">
+                <button onclick="playButtonSound();feedPet()">Feed</button>
+                <button onclick="playButtonSound();playWithPet()">Play</button>
+                <button onclick="playButtonSound();putToSleep()">Sleep</button>
+                <button onclick="playButtonSound();toggleAgeDetails()">Show Age Details</button>
+            </div>
+        </div>
+        <div id="age-popup" class="popup hidden">
+            <div class="popup-content">
+                <span class="close-btn" onclick="playButtonSound();toggleAgeDetails()">&times;</span>
+                <div id="age-details"></div>
+            </div>
+        </div>
+        <audio style="display:none" id="button-sound" src="assets/sounds/click.mp3" preload="auto"></audio>
+        <script src="script.js"></script>
+    </body>
+</html>
