@@ -123,7 +123,7 @@ img {
   text-align: center;
   color: #aaffee;
   font-family: monospace;
-  width: 300px;
+  width: 350px;
   position: relative;
   box-shadow: 0 0 15px #00ffcc;
 }
@@ -141,3 +141,16 @@ img {
   display: none;
 }
 
+@keyframes hatch {
+    0%   { transform: rotate(0deg) scale(1); opacity: 1; }
+    20%  { transform: rotate(10deg) scale(1.05); }
+    40%  { transform: rotate(-10deg) scale(1.05); }
+    60%  { transform: rotate(5deg) scale(1.1); }
+    80%  { transform: rotate(-5deg) scale(0.95); }
+    100% { transform: scale(0) rotate(0deg); opacity: 0; }
+}
+  
+.hatching {
+    animation: hatch 1s ease-out forwards;
+}
+  
