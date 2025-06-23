@@ -14,7 +14,8 @@ let pet = {
   alive: true,
   hatched: false,
   lastUpdated: new Date().toISOString(),
-  affection: 50 // Ranges from 0 to 100
+  affection: 50,
+  name: ""
 };
 
 function savePetState() {
@@ -25,6 +26,8 @@ function loadPetState() {
   const saved = JSON.parse(localStorage.getItem("pet"));
   if (saved) {
     pet = saved;
+
+    if (!pet.name) pet.name = "";
     
     if (!pet.lastUpdated) {
       pet.lastUpdated = new Date().toISOString();
@@ -51,6 +54,10 @@ function getPetAgeDays() {
 }
 
 function updateUI() {
+  if (pet.name && pet.name.trim() !== "") {
+    document.getElementById("Nameme").style.display = "none";
+    document.getElementById("pet-ui").classList.remove("hidden-until-named");
+  }  
   const age = getPetAgeDays();
   document.getElementById("age").textContent = age;
   document.getElementById("hunger").textContent = pet.hunger;
@@ -140,7 +147,6 @@ function getCurrentSprite() {
   return "adult-cat";
 }
 
-
 function updateStats() {
   if (!pet.alive) return;
 
@@ -151,14 +157,21 @@ function updateStats() {
   if (diffMins > 0) {
     pet.hunger = Math.max(0, pet.hunger - diffMins * 5);
     pet.energy = Math.max(0, pet.energy - diffMins * 5);
-    pet.affection = Math.max(0, pet.affection - diffMins * 2);
+    pet.affection = Math.max(0, pet.affection - diffMins * 9);
     if (Notification.permission === "granted" && (pet.hunger <= 30 || pet.energy <= 30) && pet.alive  && !isWindowActive) {
       new Notification("⚠️ Your pet needs you!", {
         body: `Hunger: ${pet.hunger}, Energy: ${pet.energy}`,
         icon: `assets/sprites/${getCurrentSprite()}.png`,
         silent: false
       });
-    }  
+    }
+    if (Notification.permission === "granted" && pet.affection <= 30 && pet.alive && !isWindowActive) {
+      new Notification("⚠️ Your pet needs you!", {
+        body: `Your pet is getting lonely! Affection: ${pet.affection}`,
+        icon: `assets/sprites/${getCurrentSprite()}.png`,
+        silent: false
+      });
+    }    
 
     if (pet.hunger <= 0 && pet.energy <= 0) {
       pet.alive = false;
@@ -211,6 +224,16 @@ function playButtonSound() {
   sound.play();
 }
 
+function setPetName() {
+  const input = document.getElementById("pet-name-input");
+  pet.name = input.value.trim();
+  savePetState();
+
+  if (pet.name) {
+    document.getElementById("pet-ui").classList.remove("hidden-until-named");
+  }
+}
+
 function initPet() {
   loadPetState();
   updateStats();
@@ -218,5 +241,24 @@ function initPet() {
   setInterval(updateStats, 10000);
   setInterval(updateUI, 10000);
 }
+
+const floatingName = document.getElementById("floating-name");
+
+petSprite.addEventListener("mouseenter", () => {
+  if (pet.name && pet.name.trim() !== "" && pet.name !== "Unnamed") {
+    floatingName.textContent = pet.name;
+    floatingName.classList.remove("hidden");
+  }
+});
+
+petSprite.addEventListener("mousemove", (e) => {
+  floatingName.style.left = `${e.pageX}px`;
+  floatingName.style.top = `${e.pageY}px`;
+});
+
+petSprite.addEventListener("mouseleave", () => {
+  floatingName.classList.add("hidden");
+});
+
 
 initPet();
