@@ -5,34 +5,41 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Pixel Pet</title>
         <link rel="stylesheet" href="style.css" />
-        <link rel="icon" type="image/png" href="/assets/sprites/egg.png">
+        <link rel="icon" type="image/png" href="/pixelpet/assets/sprites/egg.png">
     </head>
     <body>
         <div class="version-label">
-            <span class="shimmer-text">Pixel Pet v1.4</span>
+            <span class="shimmer-text">Pixel Pet v1.5</span>
         </div>
-        <div class="pet-container">
-            <img id="pet-sprite" src="assets/sprites/egg.png" alt="Your Pet" />
-            <div class="age-display">Age: <span id="age">0</span> years</div>
-            <div class="stats">
-                <div>Hunger: <span id="hunger">100</span></div>
-                <div>Energy: <span id="energy">100</span></div>                                
-                <div>Mood: <span id="mood">Happy</span></div>
-                <br>
-                Affection:
-                <div class="center-wrapper">
-                    <div id="affection-bar-container">
-                      <div id="affection-bar"></div>
-                    </div>
-                </div> 
-            </div>
-            <div class="buttons">
-                <button onclick="playButtonSound();feedPet()">Feed</button>
-                <button onclick="playButtonSound();playWithPet()">Play</button>
-                <button onclick="playButtonSound();putToSleep()">Sleep</button>
-                <button onclick="playButtonSound();toggleAgeDetails()">Show Age Details</button>
-                <br>
-                <button onclick="playButtonSound();toggleAbout()">About</button>
+        <div id="Nameme">
+            <input type="text" id="pet-name-input" placeholder="Name your pet" />
+            <button onclick="setPetName()">Save Name</button>
+        </div>
+        <div id="pet-ui" class="hidden-until-named">
+            <div class="pet-container">
+                <div id="floating-name" class="hidden"></div>
+                <img id="pet-sprite" src="assets/sprites/egg.png" alt="Your Pet" />
+                <div class="age-display">Age: <span id="age">0</span> years</div>
+                <div class="stats">
+                    <div>Hunger: <span id="hunger">100</span></div>
+                    <div>Energy: <span id="energy">100</span></div>                                
+                    <div>Mood: <span id="mood">Happy</span></div>
+                    <br>
+                    Affection:
+                    <div class="center-wrapper">
+                        <div id="affection-bar-container">
+                        <div id="affection-bar"></div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="buttons">
+                    <button onclick="playButtonSound();feedPet()">Feed</button>
+                    <button onclick="playButtonSound();playWithPet()">Play</button>
+                    <button onclick="playButtonSound();putToSleep()">Sleep</button>
+                    <button onclick="playButtonSound();toggleAgeDetails()">Show Age Details</button>
+                    <br>
+                    <button onclick="playButtonSound();toggleAbout()">About</button>
+                </div>
             </div>
         </div>
         <div id="age-popup" class="popup hidden">
