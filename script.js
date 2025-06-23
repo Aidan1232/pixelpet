@@ -14,7 +14,7 @@ let pet = {
   alive: true,
   hatched: false,
   lastUpdated: new Date().toISOString(),
-  affection: 50,
+  affection: 100,
   name: ""
 };
 
