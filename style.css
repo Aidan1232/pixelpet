@@ -156,3 +156,26 @@ img {
     animation: hatch 1s ease-out forwards;
 }
   
+#affection-bar-container {
+    width: 200px;
+    height: 20px;
+    background-color: #222;
+    border: 2px solid #aaa;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+  
+#affection-bar {
+    height: 100%;
+    width: 50%; /* will be set dynamically */
+    background: linear-gradient(to right, #ff66cc, #ffccff);
+    transition: width 0.3s ease;
+}
+  
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
