@@ -7,6 +7,7 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
+    zoom: 0.9;
 }
 
 .pet-container {
