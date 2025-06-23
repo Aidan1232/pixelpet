@@ -196,3 +196,13 @@ img {
 .hidden-until-named {
     display: none;
 }
+
+#Nameme input, button, #Nameme {
+    margin: 5px;
+    padding: 10px;
+    font-size: 1em;
+    background: #333;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+    border-radius: 5px;
+}
