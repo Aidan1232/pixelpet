@@ -1,5 +1,10 @@
 const petSprite = document.getElementById("pet-sprite");
 let ageUpdateInterval = null;
+let isWindowActive = true;
+
+document.addEventListener("visibilitychange", () => {
+  isWindowActive = !document.hidden;
+});
 
 let pet = {
   birthDate: new Date().toISOString(),
@@ -8,7 +13,8 @@ let pet = {
   mood: "Happy",
   alive: true,
   hatched: false,
-  lastUpdated: new Date().toISOString()
+  lastUpdated: new Date().toISOString(),
+  affection: 50 // Ranges from 0 to 100
 };
 
 function savePetState() {
@@ -50,6 +56,11 @@ function updateUI() {
   document.getElementById("hunger").textContent = pet.hunger;
   document.getElementById("energy").textContent = pet.energy;
   document.getElementById("mood").textContent = pet.mood;
+  document.getElementById("affection-bar").style.width = `${pet.affection}%`;
+  
+  if ("Notification" in window && Notification.permission !== "granted") {
+    Notification.requestPermission();
+  }
 
   let sprite;
   if (!pet.alive) {
@@ -62,6 +73,13 @@ function updateUI() {
     if (age < 5) {
       sprite = "egg.png";
     } else if (age >= 5 && !pet.hatched) {
+      if (Notification.permission === "granted" && pet.alive && !isWindowActive) {
+        new Notification("⚠️ Your pet needs you!", {
+          body: `THE EGG IS HATCHING`,
+          icon: `assets/sprites/${getCurrentSprite()}.png`,
+          silent: false
+        });
+      }  
       petSprite.src = `assets/sprites/egg.png`;
       petSprite.classList.remove("bouncing");
       petSprite.classList.add("hatching");
@@ -76,9 +94,9 @@ function updateUI() {
 
       return;
     } else if (age >= 5 && age < 10) {
-      sprite = "baby-cat.png";
+        sprite = "baby-cat.png";
     } else if (age >= 10) {
-      sprite = "adult-cat.png";
+        sprite = "adult-cat.png";
     }
   }
 
@@ -89,6 +107,7 @@ function updateUI() {
 function feedPet() {
   if (!pet.alive) return;
   pet.hunger = Math.min(100, pet.hunger + 20);
+  pet.affection = Math.min(100, pet.affection + 5);
   pet.mood = "Content";
   updateUI();
 }
@@ -100,6 +119,7 @@ function playWithPet() {
   } else {
     pet.energy = Math.max(0, pet.energy - 10);
   }
+  pet.affection = Math.min(100, pet.affection + 10);
   pet.mood = "Excited";
   updateUI();
 }
@@ -112,6 +132,15 @@ function putToSleep() {
   updateUI();
 }
 
+function getCurrentSprite() {
+  const age = getPetAgeDays();
+  if (!pet.alive) return "grave";
+  if (age < 5) return "egg";
+  if (age >= 5 && age < 10) return "baby-cat";
+  return "adult-cat";
+}
+
+
 function updateStats() {
   if (!pet.alive) return;
 
@@ -122,12 +151,20 @@ function updateStats() {
   if (diffMins > 0) {
     pet.hunger = Math.max(0, pet.hunger - diffMins * 5);
     pet.energy = Math.max(0, pet.energy - diffMins * 5);
+    pet.affection = Math.max(0, pet.affection - diffMins * 2);
+    if (Notification.permission === "granted" && (pet.hunger <= 30 || pet.energy <= 30) && pet.alive  && !isWindowActive) {
+      new Notification("⚠️ Your pet needs you!", {
+        body: `Hunger: ${pet.hunger}, Energy: ${pet.energy}`,
+        icon: `assets/sprites/${getCurrentSprite()}.png`,
+        silent: false
+      });
+    }  
 
     if (pet.hunger <= 0 && pet.energy <= 0) {
       pet.alive = false;
     } else if (pet.hunger < 20 || pet.energy < 20) {
       pet.mood = "Grumpy";
-    }
+    }  
   }
   pet.lastUpdated = now.toISOString();
 
@@ -176,10 +213,10 @@ function playButtonSound() {
 
 function initPet() {
   loadPetState();
-  updateStats(); // apply offline decay
+  updateStats();
   updateUI();
   setInterval(updateStats, 10000);
-  setInterval(updateUI, 1000);
+  setInterval(updateUI, 10000);
 }
 
 initPet();
