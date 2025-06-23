@@ -9,7 +9,7 @@
     </head>
     <body>
         <div class="version-label">
-            <span class="shimmer-text">Pixel Pet v1.5</span>
+            <span class="shimmer-text">Pixel Pet v1.6</span>
         </div>
         <div id="Nameme">
             <input type="text" id="pet-name-input" placeholder="Name your pet" />
@@ -60,5 +60,12 @@
         </div>
         <audio style="display:none" id="button-sound" src="assets/sounds/click.mp3" preload="auto"></audio>
         <script src="script.js"></script>
+        <script>
+            document.getElementById("pet-name-input").addEventListener("keydown", function(e) {
+                if (e.key === "Enter") {
+                    setPetName(); // Or whatever function you want to trigger
+                }
+            });
+        </script>
     </body>
 </html>
