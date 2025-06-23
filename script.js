@@ -57,58 +57,59 @@ function updateUI() {
   if (pet.name && pet.name.trim() !== "") {
     document.getElementById("Nameme").style.display = "none";
     document.getElementById("pet-ui").classList.remove("hidden-until-named");
-  }  
-  const age = getPetAgeDays();
-  document.getElementById("age").textContent = age;
-  document.getElementById("hunger").textContent = pet.hunger;
-  document.getElementById("energy").textContent = pet.energy;
-  document.getElementById("mood").textContent = pet.mood;
-  document.getElementById("affection-bar").style.width = `${pet.affection}%`;
-  
-  if ("Notification" in window && Notification.permission !== "granted") {
-    Notification.requestPermission();
-  }
-
-  let sprite;
-  if (!pet.alive) {
-    petSprite.classList.remove("bouncing");
-    sprite = "grave.png";
-    document.getElementById("mood").textContent = "Gone";
-    document.querySelector(".buttons").innerHTML = "<p>Your pet has passed away.<br><button onclick='resetPet()'>Start New Pet</button></p>";
-  } else {
-    petSprite.classList.add("bouncing");
-    if (age < 5) {
-      sprite = "egg.png";
-    } else if (age >= 5 && !pet.hatched) {
-      if (Notification.permission === "granted" && pet.alive && !isWindowActive) {
-        new Notification("⚠️ Your pet needs you!", {
-          body: `THE EGG IS HATCHING`,
-          icon: `assets/sprites/${getCurrentSprite()}.png`,
-          silent: false
-        });
-      }  
-      petSprite.src = `assets/sprites/egg.png`;
-      petSprite.classList.remove("bouncing");
-      petSprite.classList.add("hatching");
-
-      setTimeout(() => {
-        petSprite.classList.remove("hatching");
-        petSprite.classList.add("bouncing");
-        petSprite.src = `assets/sprites/baby-cat.png`;
-        pet.hatched = true;
-        savePetState();
-      }, 1000);
-
-      return;
-    } else if (age >= 5 && age < 10) {
-        sprite = "baby-cat.png";
-    } else if (age >= 10) {
-        sprite = "adult-cat.png";
+    
+    const age = getPetAgeDays();
+    document.getElementById("age").textContent = age;
+    document.getElementById("hunger").textContent = pet.hunger;
+    document.getElementById("energy").textContent = pet.energy;
+    document.getElementById("mood").textContent = pet.mood;
+    document.getElementById("affection-bar").style.width = `${pet.affection}%`;
+    
+    if ("Notification" in window && Notification.permission !== "granted") {
+      Notification.requestPermission();
     }
-  }
 
-  document.getElementById("pet-sprite").src = `assets/sprites/${sprite}`;
-  savePetState();
+    let sprite;
+    if (!pet.alive) {
+      petSprite.classList.remove("bouncing");
+      sprite = "grave.png";
+      document.getElementById("mood").textContent = "Gone";
+      document.querySelector(".buttons").innerHTML = "<p>Your pet has passed away.<br><button onclick='resetPet()'>Start New Pet</button></p>";
+    } else {
+      petSprite.classList.add("bouncing");
+      if (age < 5) {
+        sprite = "egg.png";
+      } else if (age >= 5 && !pet.hatched) {
+        if (Notification.permission === "granted" && pet.alive && !isWindowActive) {
+          new Notification("⚠️ Your pet needs you!", {
+            body: `THE EGG IS HATCHING`,
+            icon: `assets/sprites/${getCurrentSprite()}.png`,
+            silent: false
+          });
+        }  
+        petSprite.src = `assets/sprites/egg.png`;
+        petSprite.classList.remove("bouncing");
+        petSprite.classList.add("hatching");
+
+        setTimeout(() => {
+          petSprite.classList.remove("hatching");
+          petSprite.classList.add("bouncing");
+          petSprite.src = `assets/sprites/baby-cat.png`;
+          pet.hatched = true;
+          savePetState();
+        }, 1000);
+
+        return;
+      } else if (age >= 5 && age < 10) {
+          sprite = "baby-cat.png";
+      } else if (age >= 10) {
+          sprite = "adult-cat.png";
+      }
+    }
+
+    document.getElementById("pet-sprite").src = `assets/sprites/${sprite}`;
+    savePetState();
+  }  
 }
 
 function feedPet() {
@@ -175,7 +176,7 @@ function updateStats() {
 
     if (pet.hunger <= 0 && pet.energy <= 0) {
       pet.alive = false;
-    } else if (pet.hunger < 20 || pet.energy < 20) {
+    } else if (pet.hunger < 20 || pet.energy < 20 || pet.affection < 20) {
       pet.mood = "Grumpy";
     }  
   }
@@ -230,6 +231,7 @@ function setPetName() {
   savePetState();
 
   if (pet.name) {
+    document.getElementById("Nameme").style.display = "none";
     document.getElementById("pet-ui").classList.remove("hidden-until-named");
   }
 }
