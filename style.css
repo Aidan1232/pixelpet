@@ -21,10 +21,10 @@ body {
 }
 
 img {
-    width: 250px;
+    width: 200px;
     height: auto;
     image-rendering: pixelated;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .stats {
@@ -177,5 +177,22 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
   
+#floating-name {
+    position: absolute;
+    pointer-events: none;
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    font-family: monospace;
+    font-size: 12px;
+    border-radius: 6px;
+    transform: translate(-50%, -150%);
+    white-space: nowrap;
+    z-index: 999;
+}
+
+.hidden-until-named {
+    display: none;
+}
