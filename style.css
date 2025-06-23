@@ -37,18 +37,7 @@ img {
 
 .buttons button {
     margin: 5px;
-    padding: 14px;
-    font-size: 1em;
-    cursor: pointer;
-    background: #333;
-    color: #00ffcc;
-    border: 1px solid #00ffcc;
-    border-radius: 5px;
-}
-
-button {
-    margin: 5px;
-    padding: 8px;
+    padding: 10px;
     font-size: 1em;
     cursor: pointer;
     background: #333;
@@ -108,48 +97,48 @@ button {
 }
 
 .age-details {
-  margin-top: 10px;
-  font-size: 0.9em;
-  color: #aaffee;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #aaffee;
 }
 
 .popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
 
 .popup-content {
-  background: #1a1a1a;
-  border: 2px solid #00ffcc;
-  padding: 50px;
-  border-radius: 10px;
-  text-align: center;
-  color: #aaffee;
-  font-family: monospace;
-  width: 350px;
-  position: relative;
-  box-shadow: 0 0 15px #00ffcc;
+    background: #1a1a1a;
+    border: 2px solid #00ffcc;
+    padding: 50px;
+    border-radius: 10px;
+    text-align: center;
+    color: #aaffee;
+    font-family: monospace;
+    width: 350px;
+    position: relative;
+    box-shadow: 0 0 15px #00ffcc;
 }
 
 .close-btn {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: #fff;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #fff;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 @keyframes hatch {
