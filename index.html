@@ -9,7 +9,7 @@
     </head>
     <body>
         <div class="version-label">
-            <span class="shimmer-text">Pixel Pet v1.1</span>
+            <span class="shimmer-text">Pixel Pet v1.2</span>
         </div>
         <div class="pet-container">
             <img id="pet-sprite" src="assets/sprites/egg.png" alt="Your Pet" />
@@ -23,13 +23,25 @@
                 <button onclick="playButtonSound();feedPet()">Feed</button>
                 <button onclick="playButtonSound();playWithPet()">Play</button>
                 <button onclick="playButtonSound();putToSleep()">Sleep</button>
-                <button onclick="playButtonSound();toggleAgeDetails()">Show Age Details</button>
             </div>
+            <button onclick="playButtonSound();toggleAgeDetails()">Show Age Details</button>
+            <br>
+            <button onclick="playButtonSound();toggleAbout()">About</button>
         </div>
         <div id="age-popup" class="popup hidden">
             <div class="popup-content">
                 <span class="close-btn" onclick="playButtonSound();toggleAgeDetails()">&times;</span>
                 <div id="age-details"></div>
+            </div>
+        </div>
+        <div id="about-popup" class="popup hidden">
+            <div class="popup-content">
+              <span class="close-btn" onclick="toggleAbout()">&times;</span>
+              <h1><strong>How this works!</strong></h1>
+              <br>
+              <p>Your pet will grow and evolve even when you're not here in the brower!</p>
+              <br>
+              <p>It will save all stats and progress about your pet when your here or not</p>
             </div>
         </div>
         <audio style="display:none" id="button-sound" src="assets/sounds/click.mp3" preload="auto"></audio>
